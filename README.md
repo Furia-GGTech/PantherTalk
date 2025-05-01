@@ -24,7 +24,7 @@ Acesse agora mesmo em: https://furia-panther-hub.lovable.app/
 
 ## 📸 Visão Geral do Projeto
 
-![PantherTalk Screenshot](images/TelaInicialPantherTalk.png)
+![PantherTalk Screenshot](./PantherTalk/images/TelaInicialPantherTalk.png)
 
 ---
 
