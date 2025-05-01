@@ -5,8 +5,6 @@ PantherTalk é um chatbot interativo feito para os fãs da FURIA Esports, oferec
 
 > Descubra estatísticas em tempo real, curiosidades, rankings, calendário de jogos e interaja com o universo FURIOSO de forma intuitiva, moderna e responsiva.
 
-Acesse agora mesmo em: https://furia-panther-hub.lovable.app/
-
 ---
 
 ## 💻 Tecnologias e Ferramentas Utilizadas
@@ -24,7 +22,7 @@ Acesse agora mesmo em: https://furia-panther-hub.lovable.app/
 
 ## 🔍 Funcionalidades
 
-- **Estatísticas**  
+- **Estatísticas em tempo real**  
   Visualização dos dados atualizados sobre o desempenho dos jogadores da FURIA.
 
 - **Agenda de jogos com alertas**  
@@ -71,7 +69,7 @@ Acesse agora mesmo em: https://furia-panther-hub.lovable.app/
 
 1. **Clone o repositório**
    ```bash
-   git clone https://github.com/Furia-GGTech/PantherTalk.git
+   git clone https://github.com/seu-usuario/panthertalk.git
    cd panthertalk
    ```
 

@@ -1,0 +1,159 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 265 84% 63%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 265 84% 70%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 265 84% 63%;
+
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground overflow-x-hidden;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--secondary));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 50px;
+  }
+
+  ::selection {
+    background-color: hsla(var(--primary), 0.3);
+  }
+}
+
+@layer components {
+  .hero-gradient {
+    @apply before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-furia-black/60 before:to-background before:z-[-1];
+  }
+
+  .btn-glow {
+    @apply hover:shadow-[0_0_15px_rgba(139,92,246,0.5)] transition-shadow duration-300;
+  }
+
+  .chat-bubble {
+    @apply rounded-2xl p-4 text-sm sm:text-base max-w-[80%] shadow-lg;
+  }
+
+  .chat-bubble-bot {
+    @apply self-start rounded-tl-sm;
+  }
+
+  .chat-bubble-user {
+    @apply self-end rounded-tr-sm;
+  }
+
+  .typing-indicator {
+    @apply flex space-x-1 items-center;
+  }
+
+  .typing-dot {
+    @apply w-2 h-2 rounded-full bg-white animate-pulse-light;
+  }
+
+  .typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  .success-animation {
+    @apply after:absolute after:inset-0 after:bg-green-500/10 after:animate-pulse after:z-[-1];
+  }
+
+  .error-animation {
+    @apply after:absolute after:inset-0 after:bg-red-500/10 after:animate-pulse after:z-[-1];
+  }
+
+  .emoji-rain {
+    @apply absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden;
+  }
+
+  .emoji {
+    @apply absolute animate-fall opacity-0;
+  }
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100%) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes successPulse {
+  0%, 100% {
+    background-color: rgba(34, 197, 94, 0);
+  }
+  50% {
+    background-color: rgba(34, 197, 94, 0.2);
+  }
+}
+
+@keyframes errorPulse {
+  0%, 100% {
+    background-color: rgba(239, 68, 68, 0);
+  }
+  50% {
+    background-color: rgba(239, 68, 68, 0.2);
+  }
+}
+
+.animate-fall {
+  animation: fall 3s linear forwards;
+}
+
+.animate-success-pulse {
+  animation: successPulse 1.5s ease-in-out;
+}
+
+.animate-error-pulse {
+  animation: errorPulse 1.5s ease-in-out;
+}
