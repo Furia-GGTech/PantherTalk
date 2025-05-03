@@ -30,7 +30,7 @@ const Footer = () => {
               className="bg-furia-dark-gray hover:bg-furia-purple transition-colors w-10 h-10 flex items-center justify-center rounded-full text-white">
               <Youtube size={20} />
             </a>
-            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" 
+            <a href="https://github.com/Furia-GGTech/PantherTalk.git" target="_blank" rel="noopener noreferrer" 
               className="bg-furia-dark-gray hover:bg-furia-purple transition-colors w-10 h-10 flex items-center justify-center rounded-full text-white">
               <Github size={20} />
             </a>

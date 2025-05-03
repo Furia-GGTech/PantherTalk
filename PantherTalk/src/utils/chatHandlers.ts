@@ -1,7 +1,12 @@
 import { Dispatch, SetStateAction } from 'react';
 import { ChatMessage } from '@/types/chat';
-import { getUniqueRandomFacts } from '@/data/furiaData';
+import { getUniqueRandomFacts, getRandomStats, getRandomHistoryFact, getPlayerStats } from '@/data/furiaData';
 import { chatOptions, easterEggs } from '@/constants/chatConstants';
+
+// Keep track of last shown content to avoid repetition
+let lastShownStats: string | null = null;
+let lastShownHistoryFact: string | null = null;
+let lastCuriosityFacts: string[] = [];
 
 export const handleOptionClick = (
   option: string,
@@ -19,7 +24,9 @@ export const handleOptionClick = (
   }
 
   if (option === 'Curiosidades rápidas') {
-    const facts = getUniqueRandomFacts(3);
+    // Get unique facts that weren't shown in the last interaction
+    const facts = getUniqueRandomFacts(3, lastCuriosityFacts);
+    lastCuriosityFacts = [...facts]; // Store current facts to avoid repeating next time
     const botResponse = facts.join('\n\n');
     setMessages(prev => [...prev, 
       { sender: 'user', text: option },
@@ -46,7 +53,9 @@ export const handleOptionClick = (
     let botResponse = '';
     switch (option) {
       case 'Estatísticas':
-        botResponse = '📊 Stats atualizados da FURIA:\n\n🎯 KSCERATO: 1.27 rating\n💪 arT: 1.15 rating\n🔥 chelo: 1.12 rating\n\nWin rate do time: 68% nos últimos 3 meses!\n\nQuer saber mais sobre algum jogador específico?';
+        // Get a random stat that's different from the last one shown
+        botResponse = getRandomStats(lastShownStats);
+        lastShownStats = botResponse; // Store current stat to avoid repeating
         break;
       case 'Próximo jogo':
         if (isLoadingMatch) {
@@ -59,7 +68,9 @@ export const handleOptionClick = (
         }
         break;
       case 'História da FURIA':
-        botResponse = '📚 A FURIA Esports foi fundada em 2017 e se tornou uma das principais organizações de esports do Brasil!\n\nMarcos importantes:\n\n🏆 2019: Top 4 no Major de Berlim\n🌟 2020: #3 ranking mundial\n🎖️ 2021: Vitória na IEM Fall\n\nQuer saber mais sobre alguma época específica?';
+        // Get a random history fact that's different from the last one shown
+        botResponse = getRandomHistoryFact(lastShownHistoryFact);
+        lastShownHistoryFact = botResponse; // Store current fact to avoid repeating
         break;
       default:
         botResponse = 'Pode escolher uma das opções abaixo ou me fazer uma pergunta!';
@@ -86,6 +97,7 @@ export const handleUserInput = (
     setIsTyping(false);
     let response = "Me conte mais sobre isso! Estou aqui para ajudar com qualquer dúvida sobre a FURIA. Você também pode escolher uma das opções abaixo para navegarmos por tópicos específicos.";
     
+    // Check for easter eggs
     const lowerText = inputText.toLowerCase();
     Object.entries(easterEggs).forEach(([key, value]) => {
       if (lowerText.includes(key.toLowerCase())) {
@@ -96,6 +108,22 @@ export const handleUserInput = (
         }, 3000);
       }
     });
+    
+    // Check for player stats request
+    if (lowerText.includes('estatística') || lowerText.includes('estatisticas') || lowerText.includes('stats') || 
+        lowerText.includes('numeros') || lowerText.includes('números') || lowerText.includes('desempenho')) {
+      
+      const playerStats = getPlayerStats(lowerText);
+      if (playerStats) {
+        response = playerStats;
+        setLastAnimation('success');
+        setTimeout(() => {
+          setLastAnimation(null);
+        }, 3000);
+      } else if (lowerText.includes('jogador') || lowerText.includes('player')) {
+        response = "Posso te mostrar estatísticas dos jogadores da FURIA! Mencione o nome de um jogador como FalleN, arT, KSCERATO, yuurih ou chelo junto com a palavra 'estatísticas'.";
+      }
+    }
 
     setMessages(prev => [...prev, { sender: 'bot', text: response }]);
   }, 1500);
